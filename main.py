@@ -12,8 +12,8 @@ while True:     #Change to for loop
     http = httplib2.Http()
 
     for link in range(links):
-        chr(ord('A') + range(links))
-
+        letter = chr(ord('A') + links)
+        print (letter)
 
     start = timeit.timeit() #Start Timer
 
