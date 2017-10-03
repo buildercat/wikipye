@@ -6,13 +6,13 @@ start_link = 'https://en.wikipedia.org/wiki/Special:AllPages/' #Set Starting Lin
 num = 0
 
 #Have program check for how many links are on the page
-links = 5
+links = 26
 while True:     #Change to for loop
 
     http = httplib2.Http()
 
     for link in range(links):
-        letter = chr(ord('A') + links)
+        letter = chr(ord('A') + link)
         print (letter)
 
     start = timeit.timeit() #Start Timer
