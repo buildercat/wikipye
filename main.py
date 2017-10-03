@@ -13,7 +13,7 @@ start = timeit.timeit() #Start Timer
 
 #Repeat until URL for Philosophy wikipedia page is reached
 
-#Stop Timer
+end = timeit.timeit() #Stop Timer
 
 #Input into database Wikipedia page name, how many steps it took to get to the philosophy wikipedia page, and how long it took
 
