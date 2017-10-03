@@ -8,8 +8,6 @@ while True:     #Change to for loop
 
     http = httplib2.Http()
 
-    for
-
     if num == 0:
         letter = 'A'
     if num == 1:
