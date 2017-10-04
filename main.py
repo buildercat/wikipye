@@ -49,7 +49,6 @@ for link in links_list:
 
 print links_list
 
-
     #Find first link on wiki page
 
 
