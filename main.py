@@ -7,7 +7,10 @@ num = 0
 
 #Have program check for how many links are on the page
 links = 26
-while True:     #Change to for loop
+
+f = open('database', 'w')
+
+while num <= 26:     #Change to for loop
 
     http = httplib2.Http()
 
@@ -21,7 +24,10 @@ while True:     #Change to for loop
 
         for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
             if link.has_key('href'):
-                print link['href']
+                if link['href'].startswith('/wiki/'): #Only will print the links that start with '/wiki/'
+                    print link['href']
+
+                    f.write(link['href']+'\n')
 
         end = timeit.timeit()  # Stop Timer
         print (end - start)
@@ -39,7 +45,9 @@ while True:     #Change to for loop
 
 
 
-    f = open('database','w+')
     #Input into database Wikipedia page name, how many steps it took to get to the philosophy wikipedia page, and how long it took`
 
     #Go back to beginning
+
+    if letter == 'Z':
+        break
