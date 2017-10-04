@@ -62,4 +62,3 @@ print links_list
     #Input into database Wikipedia page name, how many steps it took to get to the philosophy wikipedia page, and how long it took`
 
     #Go back to beginning
-
