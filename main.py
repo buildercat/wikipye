@@ -12,25 +12,34 @@ while True:     #Change to for loop
     http = httplib2.Http()
 
     for link in range(links):
+        start = timeit.timeit()  # Start Timer
+
         letter = chr(ord('A') + link)
         print (letter)
 
-    start = timeit.timeit() #Start Timer
+        status, response = http.request(start_link + letter)  # Make an HTTP request
 
-    status, response = http.request(start_link + letter) #Make an HTTP request
+        for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
+            if link.has_key('href'):
+                print link['href']
+
+        end = timeit.timeit()  # Stop Timer
+        print (end - start)
+
+
+
 
     #Find first link on wiki page
+
 
     #Make an HTTP request to first link
 
     #Repeat until URL for Philosophy wikipedia page is reached
 
-    end = timeit.timeit() #Stop Timer
-    print (end - start)
+
+
 
     f = open('database','w+')
-    #Input into database Wikipedia page name, how many steps it took to get to the philosophy wikipedia page, and how long it took
-
-    #Iterate to next starting link (AA - AB)
+    #Input into database Wikipedia page name, how many steps it took to get to the philosophy wikipedia page, and how long it took`
 
     #Go back to beginning
