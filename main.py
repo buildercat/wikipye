@@ -1,4 +1,4 @@
-import httplib2,timeit
+import httplib2,time
 from BeautifulSoup import BeautifulSoup, SoupStrainer
 
 start_link = 'https://en.wikipedia.org/wiki/Special:AllPages/' #Set Starting Link
@@ -11,7 +11,8 @@ links = 26
 f = open('database', 'w')
 
 #Creates Initial Database \/ \/ \/
-start = timeit.timeit()
+start = time.time()
+
 while num <= links:     #Change to for x in links
 
     http = httplib2.Http()
@@ -36,7 +37,7 @@ while num <= links:     #Change to for x in links
         f.close()
         break
 
-end = timeit.timeit()  # Stop Timer
+end = time.time()  # Stop Timer
 
 print end - start
 
@@ -44,8 +45,9 @@ f = open('database','r')
 links_list = f.readlines()
 
 for link in links_list:
-    #status, response = http.request('https://en.wikipedia.org' + link)
-    'https://en.wikipedia.org' + link
+    status, response = http.request('https://en.wikipedia.org' + link)
+    #print 'https://en.wikipedia.org' + link
+    print response
 
 print links_list
 
