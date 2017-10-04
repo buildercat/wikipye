@@ -1,22 +1,59 @@
 import httplib2,timeit
 from BeautifulSoup import BeautifulSoup, SoupStrainer
 
-start = timeit.timeit() #Start Timer
+start_link = 'https://en.wikipedia.org/wiki/Special:AllPages/' #Set Starting Link
 
-#Set Starting Link
+num = 0
 
-#Make an HTTP request
+#Have program check for how many links are on the page
+links = 26
 
-#Find first link on wiki page
+f = open('database', 'w')
 
-#Make an HTTP request to first link
+#Creates Initial Database \/ \/ \/
 
-#Repeat until URL for Philosophy wikipedia page is reached
+while num <= links:     #Change to for x in links
 
-#Stop Timer
+    http = httplib2.Http()
 
-#Input into database Wikipedia page name, how many steps it took to get to the philosophy wikipedia page, and how long it took
+    for link in range(links):
+        start = timeit.timeit()  # Start Timer
 
-#Iterate to next starting link (AA - AB)
+        letter = chr(ord('A') + link)
+        print (letter)
 
-#Go back to beginning
+        status, response = http.request(start_link + letter)  # Make an HTTP request
+
+        for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
+            if link.has_key('href'):
+                if link['href'].startswith('/wiki/'): #Only will print the links that start with '/wiki/'
+                    print link['href']
+                    #Add functionality to go to next page
+                    f.write(link['href']+'\n')
+
+        end = timeit.timeit()  # Stop Timer
+        print (end - start)
+
+    if letter == 'Z':
+        f.close()
+        break
+
+f = open('database','r')
+links_list = f.readlines()
+print links_list
+
+
+    #Find first link on wiki page
+
+
+    #Make an HTTP request to first link
+
+    #Repeat until URL for Philosophy wikipedia page is reached
+
+
+
+
+    #Input into database Wikipedia page name, how many steps it took to get to the philosophy wikipedia page, and how long it took`
+
+    #Go back to beginning
+
