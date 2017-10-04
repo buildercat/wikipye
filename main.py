@@ -1,5 +1,5 @@
 import httplib2,timeit
-#from BeautifulSoup import BeautifulSoup, SoupStrainer
+from BeautifulSoup import BeautifulSoup, SoupStrainer
 
 start_link = 'https://en.wikipedia.org/wiki/Special:AllPages/' #Set Starting Link
 
@@ -26,6 +26,7 @@ while True:     #Change to for loop
     #Repeat until URL for Philosophy wikipedia page is reached
 
     end = timeit.timeit() #Stop Timer
+    print (end - start)
 
     f = open('database','w+')
     #Input into database Wikipedia page name, how many steps it took to get to the philosophy wikipedia page, and how long it took
