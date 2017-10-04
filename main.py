@@ -10,7 +10,9 @@ links = 26
 
 f = open('database', 'w')
 
-while num <= 26:     #Change to for loop
+#Creates Initial Database \/ \/ \/
+
+while num <= links:     #Change to for x in links
 
     http = httplib2.Http()
 
@@ -26,13 +28,19 @@ while num <= 26:     #Change to for loop
             if link.has_key('href'):
                 if link['href'].startswith('/wiki/'): #Only will print the links that start with '/wiki/'
                     print link['href']
-
+                    #Add functionality to go to next page
                     f.write(link['href']+'\n')
 
         end = timeit.timeit()  # Stop Timer
         print (end - start)
 
+    if letter == 'Z':
+        f.close()
+        break
 
+f = open('database','r')
+links_list = f.readlines()
+print links_list
 
 
     #Find first link on wiki page
@@ -49,5 +57,3 @@ while num <= 26:     #Change to for loop
 
     #Go back to beginning
 
-    if letter == 'Z':
-        break
