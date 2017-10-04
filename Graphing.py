@@ -20,6 +20,7 @@ for link in data:
     print(z)
     print(c)
     wcharCount.append(z)
+
 print(wcharCount)
 print(charCount)
 plt.scatter(charCount, wcharCount, color = "b", marker = ".")
