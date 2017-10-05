@@ -4,7 +4,8 @@ from BeautifulSoup import BeautifulSoup, SoupStrainer
 f = open('database.txt','r+')
 links = f.readlines()
 
-for x in range:
+for x in range(len(links)):
+
 
 for x in range(len(links)):
     print links[x]
