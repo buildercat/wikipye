@@ -7,7 +7,7 @@ links_list = ['https://en.wikipedia.org/w/index.php?title=Special:AllPages&from=
 num = 0
 
 #Have program check for how many links are on the page
-database_size = 1000000 #how many links the database will contain
+database_size = 500000 #how many links the database will contain
 newlink = ''
 f = open('database', 'w')
 
