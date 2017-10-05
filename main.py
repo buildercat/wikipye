@@ -1,58 +1,53 @@
 import httplib2,time
 from BeautifulSoup import BeautifulSoup, SoupStrainer
 
-start_link = 'https://en.wikipedia.org/wiki/Special:AllPages/' #Set Starting Link
-
+global start_link
+start_link = 'https://en.wikipedia.org/w/index.php?title=Special:AllPages&from=a' #Set Starting Link
+links_list = ['https://en.wikipedia.org/w/index.php?title=Special:AllPages&from=a']
 num = 0
 
 #Have program check for how many links are on the page
-links = 26
-
-f = open('database', 'w')
+database_size = 10000 #how many links the database will contain
+newlink = ''
+f = open('database.txt', 'w')
 
 #Creates Initial Database \/ \/ \/
 start = time.time()
 
-while num <= links:     #Change to for x in links
+while num <= database_size:     #Change to for x in links
 
     http = httplib2.Http()
 
-    for link in range(links):
+    status, response = http.request(links_list[0])  # Make an HTTP request
 
-        letter = chr(ord('A') + link)
-        print (letter)
+    links_list = []
 
-        status, response = http.request(start_link + letter)  # Make an HTTP request
+    for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
+        if link.has_key('href'):
+            if link['href'].startswith('/wiki/'): #Only will print the links that start with '/wiki/'
+                #print link['href']
+                #Add functionality to go to next page
+                f.write('https://en.wikipedia.org' + link['href']+' \n')
+                num += 1
+                print num
+            if link['href'].startswith('/w/index.php?title=Special:AllPages'):
+                links_list.append('https://en.wikipedia.org' + link['href'])
+                print links_list[0]
 
-        for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
-            if link.has_key('href'):
-                if link['href'].startswith('/wiki/'): #Only will print the links that start with '/wiki/'
-                    print link['href']
-                    #Add functionality to go to next page
-                    f.write(link['href']+' \n')
 
-
-
-    if letter == 'Z':
-        f.close()
-        break
 
 end = time.time()  # Stop Timer
 
 print end - start
 
-f = open('database','r')
+f = open('database.txt','r')
 links_list = f.readlines()
 
 for link in links_list:
-    status, response = http.request('https://en.wikipedia.org' + link)
-    #print 'https://en.wikipedia.org' + link
-    print response
-
-print links_list
+    #status, response = http.request('https://en.wikipedia.org' + link)
+    print 'https://en.wikipedia.org' + link
 
     #Find first link on wiki page
-
 
     #Make an HTTP request to first link
 
