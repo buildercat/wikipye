@@ -25,7 +25,7 @@ while num <= links:     #Change to for x in links
             if link['href'].startswith('/wiki/'): #Only will print the links that start with '/wiki/'
                 print link['href']
                 #Add functionality to go to next page
-                f.write(link['href']+' \n')
+                f.write('https://en.wikipedia.org' + link['href']+' \n')
             if link['href'].startswith('/w/index.php?title=Special:AllPages'):
                 print link['href']
                 start_link = 'https://en.wikipedia.org' + link['href']
