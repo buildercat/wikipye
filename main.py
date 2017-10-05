@@ -2,8 +2,8 @@ import httplib2,time
 from BeautifulSoup import BeautifulSoup, SoupStrainer
 
 global start_link
-start_link = 'https://en.wikipedia.org/w/index.php?title=Special:AllPages&from=%21' #Set Starting Link
-
+start_link = 'https://en.wikipedia.org/w/index.php?title=Special:AllPages&from=a' #Set Starting Link
+links_list = ['https://en.wikipedia.org/w/index.php?title=Special:AllPages&from=a']
 num = 0
 
 #Have program check for how many links are on the page
@@ -18,7 +18,9 @@ while num <= links:     #Change to for x in links
 
     http = httplib2.Http()
 
-    status, response = http.request(start_link)  # Make an HTTP request
+    status, response = http.request(links_list[0])  # Make an HTTP request
+
+    links_list = []
 
     for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
         if link.has_key('href'):
@@ -27,8 +29,8 @@ while num <= links:     #Change to for x in links
                 #Add functionality to go to next page
                 f.write(link['href']+' \n')
             if link['href'].startswith('/w/index.php?title=Special:AllPages'):
-                print link['href']
-                start_link = 'https://en.wikipedia.org' + link['href']
+                links_list.append('https://en.wikipedia.org' + link['href'])
+                print links_list[0]
 
 
 
@@ -48,7 +50,6 @@ for link in links_list:
 print links_list
 
     #Find first link on wiki page
-
 
     #Make an HTTP request to first link
 
