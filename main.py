@@ -7,9 +7,9 @@ links_list = ['https://en.wikipedia.org/w/index.php?title=Special:AllPages&from=
 num = 0
 
 #Have program check for how many links are on the page
-database_size = 500000 #how many links the database will contain
+database_size = 10000 #how many links the database will contain
 newlink = ''
-f = open('database', 'w')
+f = open('database.txt', 'w')
 
 #Creates Initial Database \/ \/ \/
 start = time.time()
@@ -40,15 +40,12 @@ end = time.time()  # Stop Timer
 
 print end - start
 
-f = open('database','r')
+f = open('database.txt','r')
 links_list = f.readlines()
 
 for link in links_list:
     #status, response = http.request('https://en.wikipedia.org' + link)
     print 'https://en.wikipedia.org' + link
-    #print response
-
-print links_list
 
     #Find first link on wiki page
 
