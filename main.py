@@ -36,7 +36,6 @@ while num <= database_size:     #Change to for x in links
 
 
 
-
 end = time.time()  # Stop Timer
 
 print end - start
