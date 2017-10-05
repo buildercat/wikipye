@@ -1,13 +1,14 @@
 import httplib2,time
 from BeautifulSoup import BeautifulSoup, SoupStrainer
 
-start_link = 'https://en.wikipedia.org/wiki/Special:AllPages/' #Set Starting Link
+global start_link
+start_link = 'https://en.wikipedia.org/w/index.php?title=Special:AllPages&from=%21' #Set Starting Link
 
 num = 0
 
 #Have program check for how many links are on the page
 links = 26
-
+newlink = ''
 f = open('database', 'w')
 
 #Creates Initial Database \/ \/ \/
@@ -17,25 +18,20 @@ while num <= links:     #Change to for x in links
 
     http = httplib2.Http()
 
-    for link in range(links):
+    status, response = http.request(start_link)  # Make an HTTP request
 
-        letter = chr(ord('A') + link)
-        print (letter)
-
-        status, response = http.request(start_link + letter)  # Make an HTTP request
-
-        for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
-            if link.has_key('href'):
-                if link['href'].startswith('/wiki/'): #Only will print the links that start with '/wiki/'
-                    print link['href']
-                    #Add functionality to go to next page
-                    f.write(link['href']+' \n')
+    for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
+        if link.has_key('href'):
+            if link['href'].startswith('/wiki/'): #Only will print the links that start with '/wiki/'
+                print link['href']
+                #Add functionality to go to next page
+                f.write(link['href']+' \n')
+            if link['href'].startswith('/w/index.php?title=Special:AllPages'):
+                print link['href']
+                start_link = 'https://en.wikipedia.org' + link['href']
 
 
 
-    if letter == 'Z':
-        f.close()
-        break
 
 end = time.time()  # Stop Timer
 
@@ -45,9 +41,9 @@ f = open('database','r')
 links_list = f.readlines()
 
 for link in links_list:
-    status, response = http.request('https://en.wikipedia.org' + link)
-    #print 'https://en.wikipedia.org' + link
-    print response
+    #status, response = http.request('https://en.wikipedia.org' + link)
+    print 'https://en.wikipedia.org' + link
+    #print response
 
 print links_list
 
