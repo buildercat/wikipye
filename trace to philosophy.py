@@ -4,19 +4,40 @@ from BeautifulSoup import BeautifulSoup, SoupStrainer
 f = open('database.txt','r+')
 links = f.readlines()
 
-page_links = []
+new_link = ''
 
 http = httplib2.Http()
 
 for x in range(len(links)):
     links[x] = links[x][:-2]
 
-for x in range(len(links)):
-    print links[x]
-    status, response = http.request(links[10])
+def getlinks (url):
+    status, response = http.request(url)
+
+    y = 0
 
     for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
         if link.has_key('href'):
-            if link['href'].startswith('/wiki/'):
-                page_links.append(link['href'])
-    print page_links[10]
+            y += 1
+            if y == 6:
+                new_link = 'https://en.wikipedia.org' + link['href']
+                print link['href']
+                new_link = 'https://en.wikipedia.org' + link['href']
+                break
+
+for x in range(len(links)):
+    print links[x]
+    status, response = http.request(links[x])
+    page_links = []
+
+    y = 0
+'''
+    for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
+        if link.has_key('href'):
+            y += 1
+            if y == 6:
+                new_link = 'https://en.wikipedia.org' + link['href']
+                print link['href']
+                new_link = 'https://en.wikipedia.org' + link['href']
+                break
+'''
