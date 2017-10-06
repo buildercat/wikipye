@@ -1,1 +1,9 @@
+import httplib2,time
+from BeautifulSoup import BeautifulSoup, SoupStrainer
 
+http = httplib2.Http()
+f = open('database.txt','r+')
+
+
+def firstlevel ():
+  
