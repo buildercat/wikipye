@@ -3,7 +3,19 @@ from BeautifulSoup import BeautifulSoup, SoupStrainer
 
 http = httplib2.Http()
 f = open('database.txt','r+')
+firstLinks = f.readlines()
 
+def firstlevel (firstLinks):
+    for x in firstLinks:
+        status, response = http.request(x)
+        y = 0
+        for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
+            if link.has_key('href'):
+                if link['href'].startswith('/wiki/'):
+                    y += 1
+                    if y == 6:
+                        newLink = link['href']
+                        print newLink
+                        return newLink
 
-def firstlevel ():
-  
+firstlevel(firstLinks)
