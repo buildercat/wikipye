@@ -1,40 +1,30 @@
 import httplib2,time
 from BeautifulSoup import BeautifulSoup, SoupStrainer
-
-http = httplib2.Http()
 f = open('database.txt','r+')
-firstLinks = f.readlines()
+links = f.readlines()
+f.close()
 
-for x in range(len(firstLinks)):
-    firstLinks[x] = firstLinks[x][:-2]
+linkNum = []
+pageLinks = []
+for x in range(len(links)):
+    links[x] = links[x][:-2]
 
-def firstlevel (firstLinks,x):
-    status, response = http.request('https://en.wikipedia.org' + x)
-    print response
-    y = 0
-    for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
-        if link.has_key('href'):
-            if link['href'].startswith('/wiki/'):
-                y += 1
-                if y == 6:
-                    newLink = link['href']
-                    print newLink
-                    #return newLink
-                    nextlevel(newLink)
+print links
 
-def nextlevel (newLink):
+f = open('database.txt','w') #deletes old database file
+f.close()
+for x in links:
+    pageLinks = []
+    http = httplib2.Http()
     status, response = http.request(x)
-    y = 0
+
     for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
         if link.has_key('href'):
             if link['href'].startswith('/wiki/'):
-                y += 1
-                if y == 6:
-                    newLink = link['href']
-                    print newLink
-                    # return newLink
-                    nextlevel(newLink)
-
-for x in firstLinks:
-    firstlevel(firstLinks,x)
-    
+                pageLinks.append(link['href'])
+    linkNum = len(pageLinks)
+    print 'Number of links on page: ' + str(linkNum)
+    f = open('database.txt','r+')
+    f.write('<' + str(x) + '>' + ' ' + '<' + str(linkNum) + '>' + ' \n')
+    f.close()
+    #print pageLinks
