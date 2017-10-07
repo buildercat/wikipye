@@ -3,6 +3,7 @@ from BeautifulSoup import BeautifulSoup, SoupStrainer
 
 start = time.time()
 fileLen = []
+steps = []
 f = open('database.txt','r+')
 links = f.readlines()
 f.close()
@@ -33,10 +34,27 @@ for i in links:
     #f.write(str(linkNum) + ' \n')
     #print pageLinks
     print len(fileLen)
+
+    while True:  # main loop for going between wiki articles
+        x = 0
+        http = httplib2.Http()
+        status, response = http.request(i)
+        steps = []
+        for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
+            if link.has_key('href'):
+                if link['href'] != '/wiki/Wikipedia:Protection_policy#semi' and link['href'].startswith('#') == False:
+                    wikilink = 'https://en.wikipedia.org' + link['href']
+                    print 'https://en.wikipedia.org' + link['href']
+                    i = 'https://en.wikipedia.org' + link['href']
+                    steps.append(i)
+                    break
+            if len(steps) > 5:
+                break
+
 end = time.time()
 
 totalTime = end - start
 
-print 'Finished in ' + totalTime + ' seconds'
+print 'Finished in ' + str(totalTime) + ' seconds'
 
 f.close()
