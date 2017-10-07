@@ -27,7 +27,7 @@ def getlinks (url):
 
 for x in range(len(links)):
     print links[x]
-    status, response = http.request(links[x])
+    status, response = http.request('https://en.wikipedia.org' + links[x])
     page_links = []
 
     y = 0
