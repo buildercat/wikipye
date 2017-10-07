@@ -35,14 +35,14 @@ for i in links:
     #print pageLinks
     print len(fileLen)
 
-    while True:  # main loop for going between wiki articles
+    while True:  # main loop for going between wiki articles/
         x = 0
         http = httplib2.Http()
         status, response = http.request(i)
         steps = []
         for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
             if link.has_key('href'):
-                if link['href'] != '/wiki/Wikipedia:Protection_policy#semi' and link['href'].startswith('#') == False:
+                if link['href'] != '/wiki/Wikipedia:Protection_policy#semi' and link['href'].startswith('#') == False and link['href'].startswith('/wiki/Wikipedia:') == False:
                     wikilink = 'https://en.wikipedia.org' + link['href']
                     print 'https://en.wikipedia.org' + link['href']
                     i = 'https://en.wikipedia.org' + link['href']
