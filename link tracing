@@ -12,11 +12,11 @@ for x in range(len(links)):
 print links
 
 f = open('database.txt','w') #deletes old database file
-f.close()
-for x in links:
+
+for i in links:
     pageLinks = []
     http = httplib2.Http()
-    status, response = http.request(x)
+    status, response = http.request(i)
 
     for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
         if link.has_key('href'):
@@ -24,7 +24,9 @@ for x in links:
                 pageLinks.append(link['href'])
     linkNum = len(pageLinks)
     print 'Number of links on page: ' + str(linkNum)
-    f = open('database.txt','r+')
-    f.write('<' + str(x) + '>' + ' ' + '<' + str(linkNum) + '>' + ' \n')
-    f.close()
+
+    f.write('<' + str(i) + '> ' + '<' + str(linkNum) + '>' + ' \n')
+    #f.write(str(linkNum) + ' \n')
     #print pageLinks
+
+f.close()
