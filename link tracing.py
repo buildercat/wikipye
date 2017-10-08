@@ -3,7 +3,7 @@ from BeautifulSoup import BeautifulSoup, SoupStrainer
 
 start = time.time()
 fileLen = []
-steps = ['']
+steps = []
 f = open('database.txt','r+')
 links = f.readlines()
 f.close()
@@ -29,17 +29,17 @@ for i in links:
     linkNum = len(pageLinks)
     print 'Number of links on page: ' + str(linkNum)
 
-    f.write('<' + str(i) + '> ' + '<' + str(linkNum) + '>' + ' ')
+    f.write('<' + str(i) + '> ' + '<' + str(linkNum) + '>' + ' ' + '<')
     fileLen.append('another one')
     #f.write(str(linkNum) + ' \n')
     #print pageLinks
     print len(fileLen)
 
-    while True:  # main loop for going between wiki articles/
+    while i != 'https://en.wikipedia.org/wiki/Philosophy':  # main loop for going between wiki articles/
         x = 0
         http = httplib2.Http()
         status, response = http.request(i)
-        steps = []
+        #steps = []
         for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
             if link.has_key('href'):
                 if link['href'] != '/wiki/Wikipedia:Protection_policy#semi' and link['href'].startswith('#') == False and link['href'].startswith('/wiki/Wikipedia:') == False:
@@ -47,11 +47,14 @@ for i in links:
                     print 'https://en.wikipedia.org' + link['href']
                     i = 'https://en.wikipedia.org' + link['href']
                     print steps
-                    if i in steps == True:
+                    if i in steps: #Loop for if it gets stuck in a loop
                         print 'Im stuck in a loop!'
+                        f.write('>')
+                        f.write(' ' + '<True>' + ' \n')
+                        f.close()
                         break
                     steps.append(i)
-                    f.write(i + ' \n')
+                    f.write(i + '   ')
                     break
 
 end = time.time()
