@@ -36,13 +36,16 @@ for i in links:
     print len(fileLen)
 
     while i != 'https://en.wikipedia.org/wiki/Philosophy':  # main loop for going between wiki articles/
+        find = False
+        if find: #Allows to break out of while loop
+            break
         x = 0
         http = httplib2.Http()
         status, response = http.request(i)
         #steps = []
         for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
             if link.has_key('href'):
-                if link['href'] != '/wiki/Wikipedia:Protection_policy#semi' and link['href'].startswith('#') == False and link['href'].startswith('/wiki/Wikipedia:') == False:
+                if link['href'] != '/wiki/Wikipedia:Protection_policy#semi' and link['href'].startswith('#') == False and link['href'].startswith('/wiki/Wikipedia:') == False and link['href'].startswith('/wiki/File:') == False:
                     wikilink = 'https://en.wikipedia.org' + link['href']
                     print 'https://en.wikipedia.org' + link['href']
                     i = 'https://en.wikipedia.org' + link['href']
@@ -52,6 +55,7 @@ for i in links:
                         f.write('>')
                         f.write(' ' + '<True>' + ' \n')
                         f.close()
+                        find = True
                         break
                     steps.append(i)
                     f.write(i + '   ')
