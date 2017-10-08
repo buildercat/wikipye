@@ -3,7 +3,7 @@ from BeautifulSoup import BeautifulSoup, SoupStrainer
 
 start = time.time()
 fileLen = []
-steps = []
+steps = ['']
 f = open('database.txt','r+')
 links = f.readlines()
 f.close()
@@ -29,7 +29,7 @@ for i in links:
     linkNum = len(pageLinks)
     print 'Number of links on page: ' + str(linkNum)
 
-    f.write('<' + str(i) + '> ' + '<' + str(linkNum) + '>' + ' \n')
+    f.write('<' + str(i) + '> ' + '<' + str(linkNum) + '>' + ' ')
     fileLen.append('another one')
     #f.write(str(linkNum) + ' \n')
     #print pageLinks
@@ -46,10 +46,13 @@ for i in links:
                     wikilink = 'https://en.wikipedia.org' + link['href']
                     print 'https://en.wikipedia.org' + link['href']
                     i = 'https://en.wikipedia.org' + link['href']
+                    print steps
+                    if i in steps == True:
+                        print 'Im stuck in a loop!'
+                        break
                     steps.append(i)
+                    f.write(i + ' \n')
                     break
-            if len(steps) > 5:
-                break
 
 end = time.time()
 
