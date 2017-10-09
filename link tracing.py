@@ -52,8 +52,8 @@ for i in links:
                     print steps
                     if i in steps: #Loop for if it gets stuck in a loop
                         print 'Im stuck in a loop!'
-                        f.write('>')
-                        f.write(' ' + '<True>' + ' \n')
+                        #f.write('>')
+                        f.write('True>' + ' \n')
                         f.close()
                         find = True
                         break
