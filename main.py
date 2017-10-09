@@ -1,5 +1,6 @@
 import httplib2,time
 from BeautifulSoup import BeautifulSoup, SoupStrainer
+import linkTracing
 
 global start_link
 start_link = 'https://en.wikipedia.org/w/index.php?title=Special:AllPages&from=a' #Set Starting Link
@@ -44,13 +45,5 @@ f = open('database.txt','r')
 links_list = f.readlines()
 
 print str(len(links_list)) + ' links grabbed in ' + str(end - start) + ' seconds'
-    #Find first link on wiki page
 
-    #Make an HTTP request to first link
-
-    #Repeat until URL for Philosophy wikipedia page is reached
-
-
-    #Input into database Wikipedia page name, how many steps it took to get to the philosophy wikipedia page, and how long it took`
-
-    #Go back to beginning
+#linkTracing
