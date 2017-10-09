@@ -1,5 +1,9 @@
 import httplib2,time
 from BeautifulSoup import BeautifulSoup, SoupStrainer
+
+start = time.time()
+fileLen = []
+steps = []
 f = open('database.txt','r+')
 links = f.readlines()
 f.close()
@@ -25,8 +29,42 @@ for i in links:
     linkNum = len(pageLinks)
     print 'Number of links on page: ' + str(linkNum)
 
-    f.write('<' + str(i) + '> ' + '<' + str(linkNum) + '>' + ' \n')
+    f.write('<' + str(i) + '> ' + '<' + str(linkNum) + '>' + ' ' + '<')
+    fileLen.append('another one')
     #f.write(str(linkNum) + ' \n')
     #print pageLinks
+    print len(fileLen)
+
+    while i != 'https://en.wikipedia.org/wiki/Philosophy':  # main loop for going between wiki articles/
+        find = False
+        if find: #Allows to break out of while loop
+            break
+        x = 0
+        http = httplib2.Http()
+        status, response = http.request(i)
+        #steps = []
+        for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
+            if link.has_key('href'):
+                if link['href'] != '/wiki/Wikipedia:Protection_policy#semi' and link['href'].startswith('#') == False and link['href'].startswith('/wiki/Wikipedia:') == False and link['href'].startswith('/wiki/File:') == False:
+                    wikilink = 'https://en.wikipedia.org' + link['href']
+                    print 'https://en.wikipedia.org' + link['href']
+                    i = 'https://en.wikipedia.org' + link['href']
+                    print steps
+                    if i in steps: #Loop for if it gets stuck in a loop
+                        print 'Im stuck in a loop!'
+                        f.write('>')
+                        f.write(' ' + '<True>' + ' \n')
+                        f.close()
+                        find = True
+                        break
+                    steps.append(i)
+                    f.write(i + '   ')
+                    break
+
+end = time.time()
+
+totalTime = end - start
+
+print 'Finished in ' + str(totalTime) + ' seconds'
 
 f.close()
