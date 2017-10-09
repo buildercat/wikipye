@@ -1,6 +1,5 @@
 import httplib2,time
 from BeautifulSoup import BeautifulSoup, SoupStrainer
-import linkTracing
 
 global start_link
 start_link = 'https://en.wikipedia.org/w/index.php?title=Special:AllPages&from=a' #Set Starting Link
