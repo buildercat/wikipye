@@ -42,7 +42,7 @@ for i in links:
             status, response = http.request(i)
             for link in BeautifulSoup(response, parseOnlyThese=SoupStrainer('a')):
                 if link.has_key('href'):
-                    if link['href'] != '/wiki/Wikipedia:Protection_policy#semi' and link['href'].startswith('#') == False and link['href'].startswith('/wiki/Wikipedia:') == False and link['href'].startswith('/wiki/File:') == False: #Blacklist of links not to follow
+                    if link['href'] != '/wiki/Wikipedia:Protection_policy#semi' and link['href'].startswith('#') == False and link['href'].startswith('/wiki/Help:') and link['href'].startswith('/wiki/Wikipedia:') == False and link['href'].startswith('/wiki/File:') == False and link['href'].startswith('/wiki/Special:') == False and link['href'].endswith(')') == False and link['href'].endswith('=edit') == False: #Blacklist of links not to follow
                         wikilink = 'https://en.wikipedia.org' + link['href']
                         #print 'https://en.wikipedia.org' + link['href']
                         i = 'https://en.wikipedia.org' + link['href']
